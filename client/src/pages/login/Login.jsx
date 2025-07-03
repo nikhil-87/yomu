@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useContext, useRef } from "react";
+import API from "../../api/config";
+import { useContext, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { Context } from "../../context/Context";
 import "./login.css";
@@ -8,18 +8,31 @@ export default function Login() {
   const userRef = useRef();
   const passwordRef = useRef();
   const { dispatch, isFetching } = useContext(Context);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     dispatch({ type: "LOGIN_START" });
+    setError("");
+    
     try {
-      const res = await axios.post("/auth/login", {
+      console.log("Attempting login for user:", userRef.current.value);
+      const res = await API.post("/auth/login", {
         username: userRef.current.value,
         password: passwordRef.current.value,
       });
+      console.log("Login successful:", res.data);
       dispatch({ type: "LOGIN_SUCCESS", payload: res.data });
     } catch (err) {
+      console.error("Login error:", err);
       dispatch({ type: "LOGIN_FAILURE" });
+      if (err.response) {
+        setError(err.response.data.message || `Login failed: ${err.response.status}`);
+      } else if (err.request) {
+        setError("Network error: Could not connect to server");
+      } else {
+        setError(err.message || "An unexpected error occurred");
+      }
     }
   };
 
@@ -42,7 +55,7 @@ export default function Login() {
           ref={passwordRef}
         />
         <button className="loginButton" type="submit" disabled={isFetching}>
-          Login
+          {isFetching ? "Logging in..." : "Login"}
         </button>
       </form>
       <button className="loginRegisterButton">
@@ -50,6 +63,11 @@ export default function Login() {
           Register
         </Link>
       </button>
+      {error && (
+        <div style={{color:"red", marginTop:"10px", textAlign:"center"}}>
+          <p>{error}</p>
+        </div>
+      )}
     </div>
   );
 }
