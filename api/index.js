@@ -14,13 +14,35 @@ dotenv.config();
 
 // CORS configuration
 const corsOptions = {
-  origin: process.env.CLIENT_URL || "http://localhost:3000",
+  origin: [
+    process.env.CLIENT_URL || "http://localhost:3000",
+    "https://yomu-rho.vercel.app", // Hardcode as backup
+    "http://localhost:3000" // For development
+  ],
   credentials: true,
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept', 'Origin', 'X-Requested-With'],
+  preflightContinue: false
 };
+
+console.log('CORS Configuration:', {
+  clientURL: process.env.CLIENT_URL,
+  nodeEnv: process.env.NODE_ENV,
+  allowedOrigins: corsOptions.origin
+});
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Debug middleware
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
+  console.log('Origin:', req.headers.origin);
+  console.log('Headers:', req.headers);
+  next();
+});
+
 app.use("/images", express.static(path.join(__dirname, "/images")));
 
 mongoose
