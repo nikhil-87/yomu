@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../../api/config";
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./sidebar.css";
@@ -8,8 +8,13 @@ export default function Sidebar() {
 
   useEffect(() => {
     const getCats = async () => {
-      const res = await axios.get("/categories");
-      setCats(res.data);
+      try {
+        const res = await API.get("/categories");
+        setCats(res.data);
+      } catch (err) {
+        console.error("Error fetching categories:", err);
+        setCats([]); // Fallback to empty array
+      }
     };
     getCats();
   }, []);

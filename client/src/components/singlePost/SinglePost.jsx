@@ -1,4 +1,4 @@
-import axios from "axios";
+import API from "../../api/config";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -17,32 +17,40 @@ export default function SinglePost() {
 
   useEffect(() => {
     const getPost = async () => {
-      const res = await axios.get("/posts/" + path);
-      setPost(res.data);
-      setTitle(res.data.title);
-      setDesc(res.data.desc);
+      try {
+        const res = await API.get("/posts/" + path);
+        setPost(res.data);
+        setTitle(res.data.title);
+        setDesc(res.data.desc);
+      } catch (err) {
+        console.error("Error fetching post:", err);
+      }
     };
     getPost();
   }, [path]);
 
   const handleDelete = async () => {
     try {
-      await axios.delete(`/posts/${post._id}`, {
+      await API.delete(`/posts/${post._id}`, {
         data: { username: user.username },
       });
       window.location.replace("/");
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error deleting post:", err);
+    }
   };
 
   const handleUpdate = async () => {
     try {
-      await axios.put(`/posts/${post._id}`, {
+      await API.put(`/posts/${post._id}`, {
         username: user.username,
         title,
         desc,
       });
       setUpdateMode(false)
-    } catch (err) {}
+    } catch (err) {
+      console.error("Error updating post:", err);
+    }
   };
 
   return (
