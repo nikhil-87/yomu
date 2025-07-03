@@ -1,26 +1,54 @@
 # Yomu
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel-brightgreen?style=for-the-badge&logo=vercel)](https://yomu-rho.vercel.app)
+[![API Status](https://img.shields.io/badge/API-Render-blue?style=for-the-badge&logo=render)](https://yomu.onrender.com)
+[![MongoDB](https://img.shields.io/badge/Database-MongoDB%20Atlas-green?style=for-the-badge&logo=mongodb)](https://mongodb.com)
+
 A modern blog application built with the MERN stack, where stories come to life through the art of reading and writing.
 
 ## 🚀 Live Demo
 
-- **Frontend**: [https://your-app.vercel.app](https://your-app.vercel.app)
-- **Backend API**: [https://your-api.onrender.com](https://your-api.onrender.com)
+- **Frontend**: [https://yomu-rho.vercel.app](https://yomu-rho.vercel.app) - Main blog application
+- **Backend API**: [https://yomu.onrender.com](https://yomu.onrender.com) - REST API server
+
+### API Endpoints
+- **Health Check**: [https://yomu.onrender.com/api](https://yomu.onrender.com/api)
+- **Posts**: [https://yomu.onrender.com/api/posts](https://yomu.onrender.com/api/posts)
+- **Users**: [https://yomu.onrender.com/api/users](https://yomu.onrender.com/api/users)
+- **Categories**: [https://yomu.onrender.com/api/categories](https://yomu.onrender.com/api/categories)
+
+### 🧪 Test the App
+1. Visit the [live demo](https://yomu-rho.vercel.app)
+2. Register a new account or login
+3. Create your first blog post
+4. Upload images and explore categories
+5. Update your profile settings
+
+> **Note**: The backend may take 30-60 seconds to wake up on first visit (Render free tier limitation)
 
 ## 🛠️ Tech Stack
 
 ### Frontend
-- React 17
-- React Router DOM
-- Axios
-- CSS3
+- **React 17** - UI library
+- **React Router DOM** - Client-side routing
+- **Axios** - HTTP client with centralized configuration
+- **CSS3** - Custom styling
+- **Context API** - State management
 
 ### Backend
-- Node.js
-- Express.js
-- MongoDB with Mongoose
-- Multer (file uploads)
-- bcrypt (password hashing)
+- **Node.js** - Runtime environment
+- **Express.js** - Web framework
+- **MongoDB** - NoSQL database
+- **Mongoose** - MongoDB object modeling
+- **Multer** - File upload handling
+- **bcrypt** - Password hashing
+- **CORS** - Cross-origin resource sharing
+
+### Deployment & Infrastructure
+- **Frontend**: Vercel (CDN, automatic deployments)
+- **Backend**: Render (container hosting)
+- **Database**: MongoDB Atlas (cloud database)
+- **File Storage**: Server filesystem (via Multer)
 
 ## 📁 Project Structure
 
@@ -99,7 +127,43 @@ REACT_APP_NAME=Yomu
 
 ## 📦 Deployment
 
-See [DEPLOYMENT.md](./DEPLOYMENT.md) for detailed deployment instructions for Vercel (frontend) and Render (backend).
+### 🌐 Live Hosting
+
+**Frontend (Vercel)**
+- **URL**: [https://yomu-rho.vercel.app](https://yomu-rho.vercel.app)
+- **Platform**: Vercel
+- **Auto-deploy**: Connected to GitHub main branch
+- **Build Command**: `npm run build`
+- **Output Directory**: `build`
+
+**Backend (Render)**
+- **URL**: [https://yomu.onrender.com](https://yomu.onrender.com)
+- **Platform**: Render
+- **Auto-deploy**: Connected to GitHub main branch
+- **Build Command**: `npm install`
+- **Start Command**: `node index.js`
+
+**Database**
+- **Platform**: MongoDB Atlas
+- **Connection**: Secure connection string via environment variables
+
+### 🚀 Deployment Guide
+
+For detailed deployment instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+**Quick Deploy:**
+1. **Fork this repository**
+2. **Frontend (Vercel):**
+   - Connect your GitHub repo to Vercel
+   - Set root directory to `client`
+   - Add environment variables for API URLs
+3. **Backend (Render):**
+   - Connect your GitHub repo to Render
+   - Set root directory to `api`
+   - Add environment variables for MongoDB and CORS
+4. **Database:**
+   - Create MongoDB Atlas cluster
+   - Add connection string to backend environment variables
 
 ## ✨ Features
 
