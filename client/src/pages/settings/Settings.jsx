@@ -2,7 +2,7 @@ import "./settings.css";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useContext, useState } from "react";
 import { Context } from "../../context/Context";
-import axios from "axios";
+import API, { getImagesUrl } from "../../api/config";
 
 export default function Settings() {
   const [file, setFile] = useState(null);
@@ -12,7 +12,7 @@ export default function Settings() {
   const [success, setSuccess] = useState(false);
 
   const { user, dispatch } = useContext(Context);
-  const PF = process.env.REACT_APP_IMAGES_URL || "http://localhost:5000/images/"
+  const PF = getImagesUrl();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,11 +30,11 @@ export default function Settings() {
       data.append("file", file);
       updatedUser.profilePic = filename;
       try {
-        await axios.post("/upload", data);
+        await API.post("/upload", data);
       } catch (err) {}
     }
     try {
-      const res = await axios.put("/users/" + user._id, updatedUser);
+      const res = await API.put("/users/" + user._id, updatedUser);
       setSuccess(true);
       dispatch({ type: "UPDATE_SUCCESS", payload: res.data });
     } catch (err) {
@@ -52,7 +52,7 @@ export default function Settings() {
           <label>Profile Picture</label>
           <div className="settingsPP">
             <img
-              src={file ? URL.createObjectURL(file) : PF+user.profilePic}
+              src={file ? URL.createObjectURL(file) : `${PF}/${user.profilePic}`}
               alt=""
             />
             <label htmlFor="fileInput">

@@ -1,4 +1,4 @@
-import API from "../../api/config";
+import API, { getImagesUrl } from "../../api/config";
 import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ export default function SinglePost() {
   const location = useLocation();
   const path = location.pathname.split("/")[2];
   const [post, setPost] = useState({});
-  const PF = process.env.REACT_APP_IMAGES_URL || "http://localhost:5000/images/";
+  const PF = getImagesUrl();
   const { user } = useContext(Context);
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
@@ -57,7 +57,7 @@ export default function SinglePost() {
     <div className="singlePost">
       <div className="singlePostWrapper">
         {post.photo && (
-          <img src={PF + post.photo} alt="" className="singlePostImg" />
+          <img src={`${PF}/${post.photo}`} alt="" className="singlePostImg" />
         )}
         {updateMode ? (
           <input

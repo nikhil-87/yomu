@@ -1,11 +1,12 @@
 import "./post.css";
 import { Link } from "react-router-dom";
+import { getImagesUrl } from "../../api/config";
 
 export default function Post({ post }) {
-  const PF = process.env.REACT_APP_IMAGES_URL || "http://localhost:5000/images/";
+  const PF = getImagesUrl();
   return (
     <div className="post">
-      {post.photo && <img className="postImg" src={PF + post.photo} alt="" />}
+      {post.photo && <img className="postImg" src={`${PF}/${post.photo}`} alt="" />}
       <div className="postInfo">
         <div className="postCats">
           {post.categories.map((c) => (
